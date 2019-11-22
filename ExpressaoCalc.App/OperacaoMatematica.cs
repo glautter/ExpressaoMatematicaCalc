@@ -13,6 +13,8 @@ namespace ExpressaoCalc.App
         private Operador Subtracao;
         private Operador Multiplicacao;
         private Operador Divisao;
+        private Numero Numero { get; set; } = new Numero();
+
         public OperacaoMatematica(string operacao)
         {
             Operacao = operacao;
@@ -31,8 +33,11 @@ namespace ExpressaoCalc.App
                 else
                 {
                     if (!string.IsNullOrWhiteSpace(numero))
-                        itensExpressaoMatematica.Add(new Numero { Valor = int.Parse(numero) });
-                    if (!string.IsNullOrWhiteSpace(caracter.ToString()))
+                    {
+                        Numero.AtribuirValor(int.Parse(numero));
+                        itensExpressaoMatematica.Add(Numero);
+                    }
+                    if (!string.IsNullOrWhiteSpace(caracter.ToString()) && Numero.)
                         itensExpressaoMatematica.Add(caracter.ToString());
                     
 

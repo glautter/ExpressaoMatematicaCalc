@@ -36,5 +36,10 @@ namespace ExpressaoCalc.App
         {
             return new Numero { Valor = c.Numero1 / b.Numero2 };
         }
+
+        public void AtribuirValor(int valor)
+        {
+            Valor = valor;
+        }
     }
 }
