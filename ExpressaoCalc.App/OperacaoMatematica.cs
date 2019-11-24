@@ -37,7 +37,7 @@ namespace ExpressaoCalc.App
                         Numero.AtribuirValor(int.Parse(numero));
                         itensExpressaoMatematica.Add(Numero);
                     }
-                    if (!string.IsNullOrWhiteSpace(caracter.ToString()) && Numero.)
+                    if (!string.IsNullOrWhiteSpace(caracter.ToString()))
                         itensExpressaoMatematica.Add(caracter.ToString());
                     
 
