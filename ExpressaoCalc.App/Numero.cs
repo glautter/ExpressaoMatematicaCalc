@@ -41,9 +41,5 @@ namespace ExpressaoCalc.App
         {
             Valor = valor;
         }
-        public void AtribuirConcatenando(string caracter)
-        {
-            Valor = int.Parse(Valor.ToString().Concat(caracter));
-        }
     }
 }
