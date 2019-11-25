@@ -26,12 +26,9 @@ namespace ExpressaoCalc.App
             return expressao.Replace(" ", "");
         }
 
-        public StringBuilder Resolver(Notacao notacao)
+        public StringBuilder Resolver()
         {
-            var expressaoNumerica = new StringBuilder();
-            expressaoNumerica.AppendLine(Parentese.Resolver(Expressao.ToString()));
-
-            return expressaoNumerica;
+            return new StringBuilder().AppendLine(Parentese.Resolver(Expressao.ToString()));
         }
 
         

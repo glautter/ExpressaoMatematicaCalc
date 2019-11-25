@@ -11,7 +11,7 @@ namespace ExpressaoCalc.App
         public Subtracao(List<object> itensExpressaoMatematica)
         {
             ItensExpressaoMatematica = itensExpressaoMatematica;
-            Indexador = itensExpressaoMatematica.IndexOf("-");
+            Indexador = itensExpressaoMatematica.IndexOf(Subtracao);
         }
 
         public override void Resolver()

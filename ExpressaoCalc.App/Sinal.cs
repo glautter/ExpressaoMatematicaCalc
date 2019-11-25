@@ -22,7 +22,7 @@ namespace ExpressaoCalc.App
                 var matches = Regex.Matches(expressao, $"\\{SinalAberto}(.*?)\\{SinalFechado}");
                 foreach (Match match in matches)
                 {
-                    var operacaoMatematica = new OperacaoMatematica(match.Value);
+                    var operacaoMatematica = new OperacaoMatematica(match.Value, SinalAberto, SinalFechado);
                     Expressao.Replace(match.Value, operacaoMatematica.Calcular().ToString());
                 }
             }

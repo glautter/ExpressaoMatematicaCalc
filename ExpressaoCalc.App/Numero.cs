@@ -41,5 +41,16 @@ namespace ExpressaoCalc.App
         {
             Valor = valor;
         }
+
+        private bool EhNumerico(string caracter)
+        {
+            return int.TryParse(caracter.ToString(), out _);
+        }
+
+        public void ConcatenarValor(string caracter)
+        {
+            if (EhNumerico(caracter))
+                Valor = int.Parse(Valor.ToString() + caracter);
+        }
     }
 }

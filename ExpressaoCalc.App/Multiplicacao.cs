@@ -11,7 +11,7 @@ namespace ExpressaoCalc.App
         public Multiplicacao(List<object> itensExpressaoMatematica)
         {
             ItensExpressaoMatematica = itensExpressaoMatematica;
-            Indexador = itensExpressaoMatematica.IndexOf("*");
+            Indexador = itensExpressaoMatematica.IndexOf(Multiplicacao);
         }
 
         public override void Resolver()

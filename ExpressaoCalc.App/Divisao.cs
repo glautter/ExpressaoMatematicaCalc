@@ -11,7 +11,7 @@ namespace ExpressaoCalc.App
         public Divisao(List<object> itensExpressaoMatematica)
         {
             ItensExpressaoMatematica = itensExpressaoMatematica;
-            Indexador = itensExpressaoMatematica.IndexOf("/");
+            Indexador = itensExpressaoMatematica.IndexOf(Divisao);
         }
 
         public override void Resolver()

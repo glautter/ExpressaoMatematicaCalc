@@ -13,39 +13,57 @@ namespace ExpressaoCalc.App
         private Operador Subtracao;
         private Operador Multiplicacao;
         private Operador Divisao;
+        private readonly string SinalAberto;
+        private readonly string SinalFechado;
+        private readonly List<object> ItensExpressaoMatematica = new List<object>();
         private Numero Numero { get; set; } = new Numero();
 
-        public OperacaoMatematica(string operacao)
+        public OperacaoMatematica(string operacao, string sinalAberto, string sinalFechado)
         {
             Operacao = operacao;
+            SinalAberto = sinalAberto;
+            SinalFechado = sinalFechado;
         }
 
         public int Calcular()
         {
-            var itensExpressaoMatematica = new List<object>();
-            var numero = string.Empty;
+
             foreach (var caracter in Operacao)
             {
-                if (EhNumerico(caracter))
+                AdicionarCaracterNumerico(caracter);
+                if (!EhSinal(caracter) && EstaVazioOuNulo(caracter))
                 {
-                    numero += caracter.ToString();
-                }
-                else
-                {
-                    if (!string.IsNullOrWhiteSpace(numero))
-                    {
-                        Numero.AtribuirValor(int.Parse(numero));
-                        itensExpressaoMatematica.Add(Numero);
-                    }
-                    if (!string.IsNullOrWhiteSpace(caracter.ToString()))
-                        itensExpressaoMatematica.Add(caracter.ToString());
-                    
-
-                    numero = string.Empty;
+                    AdicionarItensExpressaoNumerica(caracter.ToString());
+                    AdicionarItensExpressaoNumerica(Numero);
                 }
             }
 
-            return RealizarOperacao(itensExpressaoMatematica);
+            return RealizarOperacao(ItensExpressaoMatematica);
+        }
+
+        private bool EstaVazioOuNulo(char caracter)
+        {
+            return string.IsNullOrWhiteSpace(caracter.ToString());
+        }
+
+        private void AdicionarItensExpressaoNumerica(Numero numero)
+        {
+            ItensExpressaoMatematica.Add(numero);
+        }
+
+        private void AdicionarItensExpressaoNumerica(string caracter)
+        {
+            ItensExpressaoMatematica.Add(caracter);
+        }
+
+        private void AdicionarCaracterNumerico(char caracter)
+        {
+            Numero.ConcatenarValor(caracter.ToString());
+        }
+
+        private bool EhSinal(char caracter)
+        {
+            return caracter.ToString().Equals(SinalAberto) || caracter.ToString().Equals(SinalFechado);
         }
 
         private int RealizarOperacao(List<object> itensExpressaoMatematica)
@@ -60,11 +78,6 @@ namespace ExpressaoCalc.App
             Soma.Resolver();
 
             return Soma.Resultado;
-        }
-
-        private bool EhNumerico(char item)
-        {
-            return int.TryParse(item.ToString(), out int n);
         }
     }
 }
