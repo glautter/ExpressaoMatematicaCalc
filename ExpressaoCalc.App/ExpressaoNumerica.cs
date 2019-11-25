@@ -10,6 +10,7 @@ namespace ExpressaoCalc.App
         private StringBuilder Expressao { get; set; } = new StringBuilder();
         public Sinal Parentese { get; set; } = new Parentese();
         public Sinal Colchete { get; set; } = new Colchete();
+        public Sinal Chave { get; set; } = new Chave();
 
         public ExpressaoNumerica(string expressao)
         {
@@ -28,7 +29,11 @@ namespace ExpressaoCalc.App
 
         public StringBuilder Resolver()
         {
-            return new StringBuilder().AppendLine(Parentese.Resolver(Expressao.ToString()));
+            var resultadoParenteses = new StringBuilder(Parentese.Resolver(Expressao.ToString()));
+            var resultadoColchetes = new StringBuilder(Colchete.Resolver(resultadoParenteses.ToString()));
+            var resultadoChaves = new StringBuilder(Chave.Resolver(resultadoColchetes.ToString()));
+
+            return resultadoChaves;
         }
 
         

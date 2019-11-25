@@ -18,10 +18,11 @@ namespace ExpressaoCalc.App
         {
             if (Indexador > -1)
             {
-                Numero numero1 = ObterNumeroAnteriorAoOperador;
-                Numero numero2 = ObterNumeroPosteriorAoOperador;
-                Numero numeroOperador = new Numero(numero1.Valor, numero2.Valor);
-                Resultado = Resultado / Resultado;
+                Numero numeroAnterior = ObterNumeroAnteriorAoOperador;
+                Numero numeroPosterior = ObterNumeroPosteriorAoOperador;
+                Numero = new Numero(numeroAnterior.Valor, numeroPosterior.Valor);
+                Numero = Numero / Numero;
+                SubstituirExpressao(Numero.Valor);
             }
         }
     }

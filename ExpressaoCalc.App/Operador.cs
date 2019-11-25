@@ -10,6 +10,7 @@ namespace ExpressaoCalc.App
         public string Divisao => "/";
         public int Indexador { get; set; } = -1;
         public int Resultado { get; set; } = 0;
+        public Numero Numero { get; set; }
         public List<object> ItensExpressaoMatematica { get; set; } = new List<object>();
         public virtual void Resolver() { }
         public bool EhOperador(string operador)
@@ -24,6 +25,24 @@ namespace ExpressaoCalc.App
         public Numero ObterNumeroPosteriorAoOperador
         {
             get { return (Numero)ItensExpressaoMatematica[Indexador + 1]; }
+        }
+
+        public void SubstituirExpressao(int valor)
+        {
+            int totalItens = ItensExpressaoMatematica.Count;
+
+            for (int index = 0; index < totalItens; index++)
+            {
+                if (index == Indexador - 1)
+                {
+                    ItensExpressaoMatematica[index] = new Numero(valor);
+                }
+                else
+                {
+                    if ((index > Indexador - 1) && (index <= Indexador + 1))
+                        ItensExpressaoMatematica.Remove(index);
+                }
+            }
         }
     }
 }

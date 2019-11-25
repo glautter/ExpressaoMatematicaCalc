@@ -9,32 +9,36 @@ namespace ExpressaoCalc.App
     public class Numero
     {
         public int Valor { get; set; }
-        private int Numero1 { get; set; }
-        private int Numero2 { get; set; }
+        public int NumeroAnterior { get; set; }
+        public int NumeroPosterior { get; set; }
 
         public Numero() { }
-
-        public Numero(int numero1, int numero2)
+        public Numero(int valor)
         {
-            Numero1 = numero1;
-            Numero2 = numero2;
+            Valor = valor;
+        }
+
+        public Numero(int numeroAnterior, int numeroPosterior)
+        {
+            NumeroAnterior = numeroAnterior;
+            NumeroPosterior = numeroPosterior;
         }
 
         public static Numero operator -(Numero c)
         {
-            return new Numero { Valor = c.Numero1 -c.Numero2 };
+            return new Numero { Valor = c.NumeroAnterior -c.NumeroPosterior };
         }
         public static Numero operator +(Numero c)
         {
-            return new Numero { Valor = c.Numero1 +c.Numero2 };
+            return new Numero { Valor = c.NumeroAnterior +c.NumeroPosterior };
         }
         public static Numero operator *(Numero c, Numero d)
         {
-           return new Numero { Valor = c.Numero1 * d.Numero2 };
+           return new Numero { Valor = c.NumeroAnterior * d.NumeroPosterior };
         }
         public static Numero operator /(Numero c, Numero b)
         {
-            return new Numero { Valor = c.Numero1 / b.Numero2 };
+            return new Numero { Valor = c.NumeroAnterior / b.NumeroPosterior };
         }
 
         public void AtribuirValor(int valor)
@@ -42,15 +46,16 @@ namespace ExpressaoCalc.App
             Valor = valor;
         }
 
-        private bool EhNumerico(string caracter)
+        public bool EhNumerico(string caracter)
         {
             return int.TryParse(caracter.ToString(), out _);
         }
 
         public void ConcatenarValor(string caracter)
         {
-            if (EhNumerico(caracter))
+            if (!string.IsNullOrWhiteSpace(caracter) && EhNumerico(caracter))
                 Valor = int.Parse(Valor.ToString() + caracter);
         }
+        public bool ValorZerado { get { return Valor == 0; } }
     }
 }

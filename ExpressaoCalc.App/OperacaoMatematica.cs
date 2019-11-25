@@ -27,38 +27,49 @@ namespace ExpressaoCalc.App
 
         public int Calcular()
         {
-
             foreach (var caracter in Operacao)
             {
-                AdicionarCaracterNumerico(caracter);
-                if (!EhSinal(caracter) && EstaVazioOuNulo(caracter))
+                AdicionarCaracterNumerico(caracter.ToString());
+                if (!EhSinal(caracter) && !EhVazioOuNulo(caracter))
                 {
                     AdicionarItensExpressaoNumerica(caracter.ToString());
+                }
+                else
+                {
                     AdicionarItensExpressaoNumerica(Numero);
+                    InicializarNumero();
                 }
             }
 
             return RealizarOperacao(ItensExpressaoMatematica);
         }
 
-        private bool EstaVazioOuNulo(char caracter)
+        private void InicializarNumero()
+        {
+            Numero = new Numero();
+        }
+
+        private bool EhVazioOuNulo(char caracter)
         {
             return string.IsNullOrWhiteSpace(caracter.ToString());
         }
 
         private void AdicionarItensExpressaoNumerica(Numero numero)
         {
-            ItensExpressaoMatematica.Add(numero);
+            if (!Numero.ValorZerado)
+                ItensExpressaoMatematica.Add(numero);
         }
 
         private void AdicionarItensExpressaoNumerica(string caracter)
         {
-            ItensExpressaoMatematica.Add(caracter);
+            if (Numero.Valor == 0)
+                ItensExpressaoMatematica.Add(caracter);
         }
 
-        private void AdicionarCaracterNumerico(char caracter)
+        private void AdicionarCaracterNumerico(string caracter)
         {
-            Numero.ConcatenarValor(caracter.ToString());
+            if (Numero.EhNumerico(caracter))
+                Numero.ConcatenarValor(caracter);
         }
 
         private bool EhSinal(char caracter)
