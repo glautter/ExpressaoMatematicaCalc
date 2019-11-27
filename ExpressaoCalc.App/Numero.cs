@@ -9,8 +9,8 @@ namespace ExpressaoCalc.App
     public class Numero
     {
         public int Valor { get; set; }
-        public int NumeroAnterior { get; set; }
-        public int NumeroPosterior { get; set; }
+        public static int NumeroAnterior { get; set; }
+        public static int NumeroPosterior { get; set; }
 
         public Numero() { }
         public Numero(int valor)
@@ -26,19 +26,19 @@ namespace ExpressaoCalc.App
 
         public static Numero operator -(Numero c)
         {
-            return new Numero { Valor = c.NumeroAnterior -c.NumeroPosterior };
+            return new Numero { Valor = NumeroAnterior -NumeroPosterior };
         }
         public static Numero operator +(Numero c)
         {
-            return new Numero { Valor = c.NumeroAnterior +c.NumeroPosterior };
+            return new Numero { Valor = NumeroAnterior +NumeroPosterior };
         }
         public static Numero operator *(Numero c, Numero d)
         {
-           return new Numero { Valor = c.NumeroAnterior * d.NumeroPosterior };
+           return new Numero { Valor = NumeroAnterior * NumeroPosterior };
         }
         public static Numero operator /(Numero c, Numero b)
         {
-            return new Numero { Valor = c.NumeroAnterior / b.NumeroPosterior };
+            return new Numero { Valor = NumeroAnterior / NumeroPosterior };
         }
 
         public void AtribuirValor(int valor)

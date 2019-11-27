@@ -11,18 +11,20 @@ namespace ExpressaoCalc.App
         public Multiplicacao(List<object> itensExpressaoMatematica)
         {
             ItensExpressaoMatematica = itensExpressaoMatematica;
-            Indexador = itensExpressaoMatematica.IndexOf(Multiplicacao);
+            ObterPosicaoOperador(Multiplicacao);
         }
 
         public override void Resolver()
         {
-            if (Indexador > -1)
+            while (PosicaoOperador > -1)
             {
                 Numero numeroAnterior = ObterNumeroAnteriorAoOperador;
                 Numero numeroPosterior = ObterNumeroPosteriorAoOperador;
                 Numero = new Numero(numeroAnterior.Valor, numeroPosterior.Valor);
                 Numero = Numero * Numero;
                 SubstituirExpressao(Numero.Valor);
+                InicializarPosicaoOperador();
+                ObterPosicaoOperador(Multiplicacao);
             }
         }       
 

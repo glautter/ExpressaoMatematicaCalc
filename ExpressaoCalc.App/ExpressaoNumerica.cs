@@ -32,6 +32,8 @@ namespace ExpressaoCalc.App
             var resultadoParenteses = new StringBuilder(Parentese.Resolver(Expressao.ToString()));
             var resultadoColchetes = new StringBuilder(Colchete.Resolver(resultadoParenteses.ToString()));
             var resultadoChaves = new StringBuilder(Chave.Resolver(resultadoColchetes.ToString()));
+            var resultadoFinal = new OperacaoMatematica(resultadoChaves.ToString(), "", "");
+            resultadoFinal.Calcular();
 
             return resultadoChaves;
         }

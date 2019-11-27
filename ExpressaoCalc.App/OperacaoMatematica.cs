@@ -30,7 +30,7 @@ namespace ExpressaoCalc.App
             foreach (var caracter in Operacao)
             {
                 AdicionarCaracterNumerico(caracter.ToString());
-                if (!EhSinal(caracter) && !EhVazioOuNulo(caracter))
+                if (!EhSinal(caracter) && !EhVazioOuNulo(caracter) && !EhNumerico(caracter))
                 {
                     AdicionarItensExpressaoNumerica(caracter.ToString());
                 }
@@ -88,7 +88,7 @@ namespace ExpressaoCalc.App
             Soma = new Soma(itensExpressaoMatematica);
             Soma.Resolver();
 
-            return Soma.Resultado;
+            return ((Numero)itensExpressaoMatematica[0]).Valor;
         }
     }
 }
