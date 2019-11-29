@@ -7,3 +7,6 @@
 /.vs/ExpressaoCalc/v15
 /ExpressaoCalc.Test/bin/Debug
 /ExpressaoCalc.App/bin/Debug
+/ExpressaoCalc.App/obj/Debug/ExpressaoCalc.App.exe
+/ExpressaoCalc.App/obj/Debug/ExpressaoCalc.App.pdb
+/ExpressaoCalc.App/obj/Debug/ExpressaoCalc.App.csproj.FileListAbsolute.txt

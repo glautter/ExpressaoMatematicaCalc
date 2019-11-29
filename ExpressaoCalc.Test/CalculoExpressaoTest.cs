@@ -44,10 +44,26 @@ namespace ExpressaoCalc.Test
         }
 
         [TestMethod]
-        public void DeveResolverAExpressao()
+        public void DeveResolverAExpressaoEliminandoOsParenteses()
         {
             ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
-            Assert.IsFalse(ExpressaoMatematica.Parentese.Resolver(ExpressaoSoComParenteses).Equals(ExpressaoSoComParenteses));
+            Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(ExpressaoSoComParenteses), "3 * 7") == 0);
+        }
+
+        [TestMethod]
+        public void DeveResolverAExpressaoComResultado21()
+        {
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
+            var resultado = ExpressaoMatematica.Resolver();
+            Assert.IsTrue(String.Compare(resultado, "-> 21") == 0);
+        }
+
+        [TestMethod]
+        public void DeveResolverAExpressao()
+        {
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParentesesSemEspaco);
+            var resultado = ExpressaoMatematica.Resolver();
+            Assert.IsFalse(String.Compare(resultado, "-> 21") == 0);
         }
     }
 }

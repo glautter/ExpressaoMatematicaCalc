@@ -63,7 +63,10 @@ namespace ExpressaoCalc.App
         private void AdicionarItensExpressaoNumerica(string caracter)
         {
             if (!Numero.EhNumerico(caracter) && Numero.Valor == 0)
+            {
                 ItensExpressaoMatematica.Add(caracter);
+                AdicionarItensExpressaoNumerica(Numero);
+                    }
         }
 
         private void AdicionarCaracterNumerico(string caracter)
