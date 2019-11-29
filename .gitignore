@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ExpressaoCalc.Test/obj/Debug
+/.vs/ExpressaoCalc/v15/Server/sqlite3
+/.vs/ExpressaoCalc/v15
+/ExpressaoCalc.Test/bin/Debug
+/ExpressaoCalc.App/bin/Debug

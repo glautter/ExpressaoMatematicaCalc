@@ -12,11 +12,12 @@ namespace ExpressaoCalc.App
         public static StringBuilder ExpressionNumerica { get; set; } = new StringBuilder();
         static void Main(string[] args)
         {
-            string expressao = "3 * (2 + 5 - 3) * (40 + 5)";
+            //string expressao = "3 * (2 + 5 - 3) * (40 + 5)";
+            string expressao = "3 * [(2 + 5 - 3) * (40 + 5)]";
 
             var expressaoMatematica = new ExpressaoNumerica(expressao);
-            var resultado = expressaoMatematica.Resolver();
-
+            Console.WriteLine($"-> {expressao}");
+            Console.WriteLine(expressaoMatematica.Resolver());
             Console.ReadKey();
         }
     }

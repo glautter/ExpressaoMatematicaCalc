@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ExpressaoCalc.App
@@ -27,15 +28,20 @@ namespace ExpressaoCalc.App
             return expressao.Replace(" ", "");
         }
 
-        public StringBuilder Resolver()
+        public string Resolver()
         {
-            var resultadoParenteses = new StringBuilder(Parentese.Resolver(Expressao.ToString()));
-            var resultadoColchetes = new StringBuilder(Colchete.Resolver(resultadoParenteses.ToString()));
-            var resultadoChaves = new StringBuilder(Chave.Resolver(resultadoColchetes.ToString()));
+            var resultadoParenteses = Parentese.Resolver(Expressao.ToString());
+            Console.WriteLine($"-> {resultadoParenteses}");
+            var resultadoColchetes = Colchete.Resolver(resultadoParenteses.ToString());
+            if (!resultadoParenteses.Equals(resultadoColchetes))
+                Console.WriteLine($"-> {resultadoColchetes}");
+            var resultadoChaves = Chave.Resolver(resultadoColchetes.ToString());
+            if (!resultadoColchetes.Equals(resultadoChaves))
+                Console.WriteLine($"-> {resultadoChaves}");
             var resultadoFinal = new OperacaoMatematica(resultadoChaves.ToString(), "", "");
-            resultadoFinal.Calcular();
+            var resultado = resultadoFinal.Calcular();
 
-            return resultadoChaves;
+            return $"-> {resultado.ToString()}";
         }
 
         

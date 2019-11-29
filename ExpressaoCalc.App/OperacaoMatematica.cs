@@ -27,10 +27,10 @@ namespace ExpressaoCalc.App
 
         public int Calcular()
         {
-            foreach (var caracter in Operacao)
+            foreach (var caracter in ToString())
             {
                 AdicionarCaracterNumerico(caracter.ToString());
-                if (!EhSinal(caracter) && !EhVazioOuNulo(caracter) && !EhNumerico(caracter))
+                if (!EhSinal(caracter) && !EhVazioOuNulo(caracter))
                 {
                     AdicionarItensExpressaoNumerica(caracter.ToString());
                 }
@@ -40,7 +40,7 @@ namespace ExpressaoCalc.App
                     InicializarNumero();
                 }
             }
-
+            
             return RealizarOperacao(ItensExpressaoMatematica);
         }
 
@@ -62,7 +62,7 @@ namespace ExpressaoCalc.App
 
         private void AdicionarItensExpressaoNumerica(string caracter)
         {
-            if (Numero.Valor == 0)
+            if (!Numero.EhNumerico(caracter) && Numero.Valor == 0)
                 ItensExpressaoMatematica.Add(caracter);
         }
 
@@ -89,6 +89,11 @@ namespace ExpressaoCalc.App
             Soma.Resolver();
 
             return ((Numero)itensExpressaoMatematica[0]).Valor;
+        }
+
+        public override string ToString()
+        {
+            return Operacao.Insert(Operacao.Length, " ");
         }
     }
 }
