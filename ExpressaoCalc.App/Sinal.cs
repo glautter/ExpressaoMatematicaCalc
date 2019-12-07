@@ -15,12 +15,10 @@ namespace ExpressaoCalc.App
 
         public string Resolver()
         {
-            //AdicionarExpressao(expressao);
-
             while (TemSinal)
             {
                 var expressaoMinimaEncontrada = ObterExpressaoComSinalQueDeveSerResolvidaPrimeiro;
-                var operacaoMatematica = new OperacaoMatematica(expressaoMinimaEncontrada.Value, SinalAberto, SinalFechado);
+                var operacaoMatematica = new OperacaoMatematica(expressaoMinimaEncontrada.Value);
                 Expressao.Replace(expressaoMinimaEncontrada.Value, operacaoMatematica.Calcular().ToString());
             }
 
@@ -29,8 +27,7 @@ namespace ExpressaoCalc.App
 
         private Match ObterExpressaoComSinalQueDeveSerResolvidaPrimeiro
         {
-            ////\(((?:[^])*)\)
-            get { return Regex.Matches(Expressao.ToString(), $"\\{SinalAberto}((?:[^{SinalFechado}])*)\\{SinalFechado}")[0]; }
+            get { return Regex.Matches(Expressao.ToString(), $"\\{SinalAberto}((?:[^\\{SinalAberto}\\{SinalFechado}])*)\\{SinalFechado}")[0]; }
         }
 
         public void AdicionarExpressao(string expressao)

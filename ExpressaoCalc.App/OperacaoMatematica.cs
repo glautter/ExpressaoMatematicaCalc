@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ExpressaoCalc.App
 {
@@ -13,71 +10,52 @@ namespace ExpressaoCalc.App
         private Operador Subtracao;
         private Operador Multiplicacao;
         private Operador Divisao;
-        private readonly string SinalAberto;
-        private readonly string SinalFechado;
+        public readonly string SinalAberto;
+        public readonly string SinalFechado;
         private readonly List<object> ItensExpressaoMatematica = new List<object>();
+
         private Numero Numero { get; set; } = new Numero();
 
-        public OperacaoMatematica(string operacao, string sinalAberto, string sinalFechado)
+        public OperacaoMatematica(string operacao)
         {
             Operacao = operacao;
-            SinalAberto = sinalAberto;
-            SinalFechado = sinalFechado;
         }
 
         public int Calcular()
         {
-            foreach (var caracter in ToString())
-            {
-                AdicionarCaracterNumerico(caracter.ToString());
-                if (!EhSinal(caracter) && !EhVazioOuNulo(caracter))
-                {
-                    AdicionarItensExpressaoNumerica(caracter.ToString());
-                }
-                else
-                {
-                    AdicionarItensExpressaoNumerica(Numero);
-                    InicializarNumero();
-                }
-            }
-            
+            CarregarItensDaExpressaoMatematica();
+
             return RealizarOperacao(ItensExpressaoMatematica);
         }
 
+        private void CarregarItensDaExpressaoMatematica()
+        {
+            foreach (var caracter in SepararNumerosDeOperadores)
+            {
+                AdicionarItemNaExpressaoMatematica(Numero, caracter.ToString());
+                InicializarNumero();
+            }
+        }
+
+        private MatchCollection SepararNumerosDeOperadores
+        {
+            get { return Regex.Matches(Operacao, "(\\d*[0-9]|\\w*[\\+\\-\\/\\*])"); }
+        }
+        
         private void InicializarNumero()
         {
             Numero = new Numero();
         }
-
-        private bool EhVazioOuNulo(char caracter)
-        {
-            return string.IsNullOrWhiteSpace(caracter.ToString());
-        }
-
-        private void AdicionarItensExpressaoNumerica(Numero numero)
-        {
-            if (!Numero.ValorZerado)
-                ItensExpressaoMatematica.Add(numero);
-        }
-
-        private void AdicionarItensExpressaoNumerica(string caracter)
-        {
-            if (!Numero.EhNumerico(caracter) && Numero.Valor == 0)
-            {
-                ItensExpressaoMatematica.Add(caracter);
-                AdicionarItensExpressaoNumerica(Numero);
-                    }
-        }
-
-        private void AdicionarCaracterNumerico(string caracter)
+        
+        private void AdicionarItemNaExpressaoMatematica(Numero numero, string caracter)
         {
             if (Numero.EhNumerico(caracter))
-                Numero.ConcatenarValor(caracter);
-        }
-
-        private bool EhSinal(char caracter)
-        {
-            return caracter.ToString().Equals(SinalAberto) || caracter.ToString().Equals(SinalFechado);
+            {
+                Numero.AtribuirValor(int.Parse(caracter));
+                ItensExpressaoMatematica.Add(numero);
+            }
+            else
+                ItensExpressaoMatematica.Add(caracter);
         }
 
         private int RealizarOperacao(List<object> itensExpressaoMatematica)
@@ -92,11 +70,6 @@ namespace ExpressaoCalc.App
             Soma.Resolver();
 
             return ((Numero)itensExpressaoMatematica[0]).Valor;
-        }
-
-        public override string ToString()
-        {
-            return Operacao.Insert(Operacao.Length, " ");
         }
     }
 }

@@ -15,13 +15,9 @@ namespace ExpressaoCalc.App
 
         public ExpressaoNumerica(string expressao)
         {
-            AdicionarExpressao(expressao);
-            Parentese.AdicionarExpressao(expressao);
-        }
-
-        private void AdicionarExpressao(string expressao)
-        {
             Expressao.Append(expressao);
+
+            Parentese.AdicionarExpressao(Expressao.ToString());
         }
 
         public string RetirarEspacos(string expressao)
@@ -41,7 +37,7 @@ namespace ExpressaoCalc.App
             var resultadoChaves = Chave.Resolver();
             if (!resultadoColchetes.Equals(resultadoChaves))
                 Console.WriteLine($"-> {resultadoChaves}");
-            var resultadoFinal = new OperacaoMatematica(resultadoChaves.ToString(), "", "");
+            var resultadoFinal = new OperacaoMatematica(resultadoChaves.ToString());
             var resultado = resultadoFinal.Calcular();
 
             return $"-> {resultado.ToString()}";
