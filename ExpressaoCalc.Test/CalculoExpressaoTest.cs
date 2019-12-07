@@ -9,7 +9,7 @@ namespace ExpressaoCalc.Test
     {
         private readonly string ExpressaoSoComParenteses = "3 * (2 + 5)";
         private readonly string ExpressaoSoComDoisParenteses = "3 * ((2 + 5) + 5)";
-        private readonly string ExpressaoSoComTresParenteses = "8 / {1 + [3 * (4 * (45 + 90)) + (8 - 5)] * 5}";
+        private readonly string ExpressaoSoComTresParentesesUmColcheteUmaChave = "8116 / {1 + [3 * (4 * (45 + 90)) + (8 - 5)] * 5}";
         private readonly string ExpressaoSoComParentesesSemEspaco = "3*(2+5)";
         private ExpressaoNumerica ExpressaoMatematica { get; set; }
         
@@ -76,10 +76,16 @@ namespace ExpressaoCalc.Test
         }
 
         [TestMethod]
-        public void DeveResolverAExpressaoEliminandoOsTresParenteses()
+        public void DeveResolverAExpressaoEliminandoOsTresParentesesUmColcheteUmaChave()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComTresParenteses);
-            Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(), "8 / {1 + [3 * 540 + 3] * 5}") == 0);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComTresParentesesUmColcheteUmaChave);
+            Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(), "8116 / {1 + [3 * 540 + 3] * 5}") == 0);
+            ExpressaoMatematica.Colchete.AdicionarExpressao(ExpressaoMatematica.Parentese.Expressao.ToString());
+            Assert.IsTrue(String.Compare(ExpressaoMatematica.Colchete.Resolver(), "8116 / {1 + 1623 * 5}") == 0);
+            ExpressaoMatematica.Chave.AdicionarExpressao(ExpressaoMatematica.Colchete.Expressao.ToString());
+            Assert.IsTrue(String.Compare(ExpressaoMatematica.Chave.Resolver(), "8116 / 8116") == 0);
+            var resultadoFinal = new OperacaoMatematica(ExpressaoMatematica.Chave.Expressao.ToString());
+            Assert.AreEqual(resultadoFinal.Calcular(), 1);
         }
     }
 }

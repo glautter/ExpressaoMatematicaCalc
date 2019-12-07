@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExpressaoCalc.App
+﻿namespace ExpressaoCalc.App
 {
     public class Numero
     {
@@ -50,12 +44,5 @@ namespace ExpressaoCalc.App
         {
             return int.TryParse(caracter.ToString(), out _);
         }
-
-        public void ConcatenarValor(string caracter)
-        {
-            if (!string.IsNullOrWhiteSpace(caracter) && EhNumerico(caracter))
-                Valor = int.Parse(Valor.ToString() + caracter);
-        }
-        public bool ValorZerado { get { return Valor == 0; } }
     }
 }

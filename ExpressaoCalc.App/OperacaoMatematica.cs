@@ -12,7 +12,7 @@ namespace ExpressaoCalc.App
         private Operador Divisao;
         public readonly string SinalAberto;
         public readonly string SinalFechado;
-        private readonly List<object> ItensExpressaoMatematica = new List<object>();
+        private readonly List<object> ItensExpressaoNumerica = new List<object>();
 
         private Numero Numero { get; set; } = new Numero();
 
@@ -23,12 +23,12 @@ namespace ExpressaoCalc.App
 
         public int Calcular()
         {
-            CarregarItensDaExpressaoMatematica();
+            CarregarItensDaExpressaoNumerica();
 
-            return RealizarOperacao(ItensExpressaoMatematica);
+            return RealizarOperacao(ItensExpressaoNumerica);
         }
 
-        private void CarregarItensDaExpressaoMatematica()
+        private void CarregarItensDaExpressaoNumerica()
         {
             foreach (var caracter in SepararNumerosDeOperadores)
             {
@@ -52,10 +52,10 @@ namespace ExpressaoCalc.App
             if (Numero.EhNumerico(caracter))
             {
                 Numero.AtribuirValor(int.Parse(caracter));
-                ItensExpressaoMatematica.Add(numero);
+                ItensExpressaoNumerica.Add(numero);
             }
             else
-                ItensExpressaoMatematica.Add(caracter);
+                ItensExpressaoNumerica.Add(caracter);
         }
 
         private int RealizarOperacao(List<object> itensExpressaoMatematica)
