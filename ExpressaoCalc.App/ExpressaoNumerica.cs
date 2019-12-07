@@ -16,6 +16,7 @@ namespace ExpressaoCalc.App
         public ExpressaoNumerica(string expressao)
         {
             AdicionarExpressao(expressao);
+            Parentese.AdicionarExpressao(expressao);
         }
 
         private void AdicionarExpressao(string expressao)
@@ -30,12 +31,14 @@ namespace ExpressaoCalc.App
 
         public string Resolver()
         {
-            var resultadoParenteses = Parentese.Resolver(Expressao.ToString());
+            var resultadoParenteses = Parentese.Resolver();
             Console.WriteLine($"-> {resultadoParenteses}");
-            var resultadoColchetes = Colchete.Resolver(resultadoParenteses.ToString());
+            Colchete.AdicionarExpressao(resultadoParenteses);
+            var resultadoColchetes = Colchete.Resolver();
             if (!resultadoParenteses.Equals(resultadoColchetes))
                 Console.WriteLine($"-> {resultadoColchetes}");
-            var resultadoChaves = Chave.Resolver(resultadoColchetes.ToString());
+            Chave.AdicionarExpressao(resultadoColchetes);
+            var resultadoChaves = Chave.Resolver();
             if (!resultadoColchetes.Equals(resultadoChaves))
                 Console.WriteLine($"-> {resultadoChaves}");
             var resultadoFinal = new OperacaoMatematica(resultadoChaves.ToString(), "", "");

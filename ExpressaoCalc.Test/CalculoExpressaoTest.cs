@@ -8,6 +8,7 @@ namespace ExpressaoCalc.Test
     public class CalculoExpressaoTest
     {
         private readonly string ExpressaoSoComParenteses = "3 * (2 + 5)";
+        private readonly string ExpressaoSoComDoisParenteses = "3 * ((2 + 5) + 5)";
         private readonly string ExpressaoSoComParentesesSemEspaco = "3*(2+5)";
         private ExpressaoNumerica ExpressaoMatematica { get; set; }
         
@@ -47,7 +48,14 @@ namespace ExpressaoCalc.Test
         public void DeveResolverAExpressaoEliminandoOsParenteses()
         {
             ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
-            Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(ExpressaoSoComParenteses), "3 * 7") == 0);
+            Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(), "3 * 7") == 0);
+        }
+
+        [TestMethod]
+        public void DeveResolverAExpressaoEliminandoOsDoisParenteses()
+        {
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComDoisParenteses);
+            Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(), "3 * 12") == 0);
         }
 
         [TestMethod]

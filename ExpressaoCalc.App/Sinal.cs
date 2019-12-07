@@ -13,21 +13,24 @@ namespace ExpressaoCalc.App
         public virtual string SinalFechado { get; set; }
         public StringBuilder Expressao { get; set; } = new StringBuilder();
 
-        public string Resolver(string expressao)
+        public string Resolver()
         {
-            AdicionarExpressao(expressao);
+            //AdicionarExpressao(expressao);
 
-            if (TemSinal)
+            while (TemSinal)
             {
-                var matches = Regex.Matches(expressao, $"\\{SinalAberto}(.*?)\\{SinalFechado}");
-                foreach (Match match in matches)
-                {
-                    var operacaoMatematica = new OperacaoMatematica(match.Value, SinalAberto, SinalFechado);
-                    Expressao.Replace(match.Value, operacaoMatematica.Calcular().ToString());
-                }
+                var expressaoMinimaEncontrada = ObterExpressaoComSinalQueDeveSerResolvidaPrimeiro;
+                var operacaoMatematica = new OperacaoMatematica(expressaoMinimaEncontrada.Value, SinalAberto, SinalFechado);
+                Expressao.Replace(expressaoMinimaEncontrada.Value, operacaoMatematica.Calcular().ToString());
             }
 
             return Expressao.ToString();
+        }
+
+        private Match ObterExpressaoComSinalQueDeveSerResolvidaPrimeiro
+        {
+            ////\(((?:[^])*)\)
+            get { return Regex.Matches(Expressao.ToString(), $"\\{SinalAberto}((?:[^{SinalFechado}])*)\\{SinalFechado}")[0]; }
         }
 
         public void AdicionarExpressao(string expressao)
