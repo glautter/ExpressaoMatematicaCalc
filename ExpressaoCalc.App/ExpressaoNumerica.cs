@@ -26,7 +26,7 @@ namespace ExpressaoCalc.App
         }
 
         public string Resolver()
-        {
+        { 
             var resultadoParenteses = Parentese.Resolver();
             Console.WriteLine($"-> {resultadoParenteses}");
             Colchete.AdicionarExpressao(resultadoParenteses);

@@ -32,7 +32,7 @@ namespace ExpressaoCalc.App
         {
             foreach (var caracter in SepararNumerosDeOperadores)
             {
-                AdicionarItemNaExpressaoMatematica(Numero, caracter.ToString());
+                AdicionarItemNaExpressaoNumerica(Numero, caracter.ToString());
                 InicializarNumero();
             }
         }
@@ -47,7 +47,7 @@ namespace ExpressaoCalc.App
             Numero = new Numero();
         }
         
-        private void AdicionarItemNaExpressaoMatematica(Numero numero, string caracter)
+        private void AdicionarItemNaExpressaoNumerica(Numero numero, string caracter)
         {
             if (Numero.EhNumerico(caracter))
             {

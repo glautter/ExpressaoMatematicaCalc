@@ -18,9 +18,7 @@ namespace ExpressaoCalc.App
         {
             while (PosicaoOperador > -1)
             {
-                Numero numeroAnterior = ObterNumeroAnteriorAoOperador;
-                Numero numeroPosterior = ObterNumeroPosteriorAoOperador;
-                Numero = new Numero(numeroAnterior.Valor, numeroPosterior.Valor);
+                Numero = ObterNumerosAnteriorEPosterior;
                 Numero = -Numero;
                 SubstituirExpressao(Numero.Valor);
 

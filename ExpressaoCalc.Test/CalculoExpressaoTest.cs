@@ -10,6 +10,7 @@ namespace ExpressaoCalc.Test
         private readonly string ExpressaoSoComParenteses = "3 * (2 + 5)";
         private readonly string ExpressaoSoComDoisParenteses = "3 * ((2 + 5) + 5)";
         private readonly string ExpressaoSoComTresParentesesUmColcheteUmaChave = "8116 / {1 + [3 * (4 * (45 + 90)) + (8 - 5)] * 5}";
+        private readonly string ExpressaoSoComParentesesValorNegativo = "2 * {1 + [3 * (4 * (45 + 90)) + ((-8) - 5)] * 5}";
         private readonly string ExpressaoSoComParentesesSemEspaco = "3*(2+5)";
         private ExpressaoNumerica ExpressaoMatematica { get; set; }
         
@@ -68,11 +69,19 @@ namespace ExpressaoCalc.Test
         }
 
         [TestMethod]
-        public void DeveResolverAExpressao()
+        public void DeveResolverAExpressaoSoComParentesesSemEspaco()
         {
             ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParentesesSemEspaco);
             var resultado = ExpressaoMatematica.Resolver();
             Assert.IsTrue(String.Compare(resultado, "-> 21") == 0);
+        }
+
+        [TestMethod]
+        public void DeveResolverAExpressaoComParentesesValorNegativo()
+        {
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParentesesValorNegativo);
+            var resultado = ExpressaoMatematica.Resolver();
+            Assert.IsTrue(String.Compare(resultado, "-> 0") == 0);
         }
 
         [TestMethod]

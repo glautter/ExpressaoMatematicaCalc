@@ -18,22 +18,10 @@
             NumeroPosterior = numeroPosterior;
         }
 
-        public static Numero operator -(Numero c)
-        {
-            return new Numero { Valor = NumeroAnterior -NumeroPosterior };
-        }
-        public static Numero operator +(Numero c)
-        {
-            return new Numero { Valor = NumeroAnterior +NumeroPosterior };
-        }
-        public static Numero operator *(Numero c, Numero d)
-        {
-           return new Numero { Valor = NumeroAnterior * NumeroPosterior };
-        }
-        public static Numero operator /(Numero c, Numero b)
-        {
-            return new Numero { Valor = NumeroAnterior / NumeroPosterior };
-        }
+        public static Numero operator -(Numero c) => new Numero { Valor = NumeroAnterior - NumeroPosterior };
+        public static Numero operator +(Numero c) => new Numero { Valor = NumeroAnterior + NumeroPosterior };
+        public static Numero operator *(Numero c, Numero d) => new Numero { Valor = NumeroAnterior * NumeroPosterior };
+        public static Numero operator /(Numero c, Numero b) => new Numero { Valor = NumeroAnterior / NumeroPosterior };
 
         public void AtribuirValor(int valor)
         {

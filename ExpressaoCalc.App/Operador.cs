@@ -10,7 +10,7 @@ namespace ExpressaoCalc.App
         public string Divisao => "/";
         public int PosicaoOperador { get; set; } = -1;
         public int Resultado { get; set; } = 0;
-        public Numero Numero { get; set; }
+        public Numero Numero { get; set; } = new Numero();
         public List<object> ItensExpressaoMatematica { get; set; } = new List<object>();
         public virtual void Resolver() { }
 
@@ -19,25 +19,35 @@ namespace ExpressaoCalc.App
             return operador.Contains(Soma) || operador.Contains(Subtracao) || operador.Contains(Multiplicacao) || operador.Contains(Divisao);
         }
 
-        public Numero ObterNumeroAnteriorAoOperador
+        public Numero NumeroAnteriorAoOperador
         {
-            get { return (Numero)ItensExpressaoMatematica[PosicaoOperador - 1]; }
+            get
+            {
+                if (PosicaoOperador == 0 && EhOperador(ItensExpressaoMatematica[PosicaoOperador].ToString()))
+                {
+                    Numero.Valor = int.Parse(string.Join("", ItensExpressaoMatematica[PosicaoOperador], ((Numero)ItensExpressaoMatematica[PosicaoOperador + 1]).Valor.ToString()));
+                    ReorganizarItensExpressaoMatematica();
+
+                    return Numero;
+                }
+
+                return (Numero)ItensExpressaoMatematica[PosicaoOperador - 1];
+            }
         }
 
-        public Numero ObterNumeroPosteriorAoOperador
+        private void ReorganizarItensExpressaoMatematica()
         {
-            get { return (Numero)ItensExpressaoMatematica[PosicaoOperador + 1]; }
+            for (int index = 0; index < ItensExpressaoMatematica.Count - 1; index++)
+                ItensExpressaoMatematica[index] = index == 0 ? Numero : ItensExpressaoMatematica[index + 1];
+
+            ItensExpressaoMatematica.RemoveAt(ItensExpressaoMatematica.Count - 1);
         }
 
-        public void ObterPosicaoOperador(string operacao)
-        {
-            PosicaoOperador = ItensExpressaoMatematica.IndexOf(operacao);
-        }
+        public Numero NumeroPosteriorAoOperador => (PosicaoOperador == 0 && EhOperador(ItensExpressaoMatematica[PosicaoOperador].ToString())) || ItensExpressaoMatematica.Count == 1 ? new Numero(0) : (Numero)ItensExpressaoMatematica[PosicaoOperador + 1];
 
-        public void InicializarPosicaoOperador()
-        {
-            PosicaoOperador = -1;
-        }
+        public void ObterPosicaoOperador(string operacao) => PosicaoOperador = ItensExpressaoMatematica.IndexOf(operacao);
+
+        public void InicializarPosicaoOperador() => PosicaoOperador = -1;
 
         public void SubstituirExpressao(int valor)
         {
@@ -48,19 +58,14 @@ namespace ExpressaoCalc.App
                 if (index == PosicaoOperador - 1)
                 {
                     AdicionarItemDeSubstituicao(valor, index);
-                    RemoverItemDaExpressaoResolvido(PosicaoOperador);
+                    RemoverItemDaExpressaoCalculada(PosicaoOperador);
                 }
             }
         }
 
-        private void AdicionarItemDeSubstituicao(int valor, int index)
-        {
-            ItensExpressaoMatematica[index] = new Numero(valor);
-        }
+        public Numero ObterNumerosAnteriorEPosterior => new Numero(NumeroAnteriorAoOperador.Valor, NumeroPosteriorAoOperador.Valor);
 
-        private void RemoverItemDaExpressaoResolvido(int index)
-        {
-            ItensExpressaoMatematica.RemoveRange(index, 2);
-        }
+        private void AdicionarItemDeSubstituicao(int valor, int index) => ItensExpressaoMatematica[index] = new Numero(valor);
+        private void RemoverItemDaExpressaoCalculada(int index) => ItensExpressaoMatematica.RemoveRange(index, 2);
     }
 }
