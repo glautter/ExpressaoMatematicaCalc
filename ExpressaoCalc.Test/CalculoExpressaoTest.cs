@@ -20,7 +20,7 @@ namespace ExpressaoCalc.Test
         {
             ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
             ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoSoComParenteses);
-            Assert.IsTrue(ExpressaoMatematica.Parentese.SinalAberto == "(");
+            Assert.IsTrue(ExpressaoMatematica.Parentese.AgrupadorAberto == "(");
         }
 
         [TestMethod]
@@ -28,15 +28,15 @@ namespace ExpressaoCalc.Test
         {
             ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
             ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoSoComParenteses);
-            Assert.IsTrue(ExpressaoMatematica.Parentese.SinalFechado == ")");
+            Assert.IsTrue(ExpressaoMatematica.Parentese.AgrupadorFechado == ")");
         }
 
         [TestMethod]
-        public void DeveIdentificarSeTemSinal()
+        public void DeveIdentificarSeTemAgrupador()
         {
             ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
             ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoSoComParenteses);
-            Assert.IsTrue(ExpressaoMatematica.Parentese.TemSinal);
+            Assert.IsTrue(ExpressaoMatematica.Parentese.TemAgrupador);
         }
 
         [TestMethod]

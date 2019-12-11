@@ -6,12 +6,10 @@ namespace ExpressaoCalc.App
 {
     public class ExpressaoNumerica
     {
-        public Numero Numero { get; set; }
-        public Operador Operador { get; set; }
         private StringBuilder Expressao { get; set; } = new StringBuilder();
-        public Sinal Parentese { get; set; } = new Parentese();
-        public Sinal Colchete { get; set; } = new Colchete();
-        public Sinal Chave { get; set; } = new Chave();
+        public Agrupador Parentese { get; set; } = new Parentese();
+        public Agrupador Colchete { get; set; } = new Colchete();
+        public Agrupador Chave { get; set; } = new Chave();
 
         public ExpressaoNumerica(string expressao)
         {

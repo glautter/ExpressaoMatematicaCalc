@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ExpressaoCalc.App
 {
-    public abstract class Sinal
+    public abstract class Agrupador
     {
-        public virtual string SinalAberto { get; set; }
-        public virtual string SinalFechado { get; set; }
+        public virtual string AgrupadorAberto { get; set; }
+        public virtual string AgrupadorFechado { get; set; }
         public StringBuilder Expressao { get; set; } = new StringBuilder();
 
         public string Resolver()
         {
-            while (TemSinal)
+            while (TemAgrupador)
             {
-                var expressaoMinimaEncontrada = ObterExpressaoComSinalQueDeveSerResolvidaPrimeiro;
+                var expressaoMinimaEncontrada = ObterExpressaoComAgrupadorQueDeveSerResolvidaPrimeiro;
                 var operacaoMatematica = new OperacaoMatematica(expressaoMinimaEncontrada.Value);
                 Expressao.Replace(expressaoMinimaEncontrada.Value, operacaoMatematica.Calcular().ToString());
             }
@@ -25,9 +22,9 @@ namespace ExpressaoCalc.App
             return Expressao.ToString();
         }
 
-        private Match ObterExpressaoComSinalQueDeveSerResolvidaPrimeiro
+        private Match ObterExpressaoComAgrupadorQueDeveSerResolvidaPrimeiro
         {
-            get { return Regex.Matches(Expressao.ToString(), $"\\{SinalAberto}((?:[^\\{SinalAberto}\\{SinalFechado}])*)\\{SinalFechado}")[0]; }
+            get { return Regex.Matches(Expressao.ToString(), $"\\{AgrupadorAberto}((?:[^\\{AgrupadorAberto}\\{AgrupadorFechado}])*)\\{AgrupadorFechado}")[0]; }
         }
 
         public void AdicionarExpressao(string expressao)
@@ -35,13 +32,13 @@ namespace ExpressaoCalc.App
             Expressao.Append(expressao);
         }
 
-        private IList<int> ObterPosicoesDoSinal(string sinal)
+        private IList<int> ObterPosicoesDoAgrupador(string agrupador)
         {
             var posicoes = new List<int>();
 
             for (int index = 0; index < Expressao.Length; index++)
             {
-                if (Expressao[index].ToString().Equals(sinal))
+                if (Expressao[index].ToString().Equals(agrupador))
                 {
                     posicoes.Add(index);
                 }
@@ -50,9 +47,9 @@ namespace ExpressaoCalc.App
             return posicoes;
         }
 
-        public bool TemSinal
+        public bool TemAgrupador
         {
-            get { return Expressao.ToString().IndexOf(SinalAberto) > -1; }
+            get { return Expressao.ToString().IndexOf(AgrupadorAberto) > -1; }
         }
     }
 }

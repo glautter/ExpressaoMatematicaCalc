@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ExpressaoCalc.App
 {
-    public class Colchete : Sinal
+    public class Colchete : Agrupador
     {
-        public override string SinalAberto { get => "["; }
-        public override string SinalFechado { get => "]"; }
+        public override string AgrupadorAberto { get => "["; }
+        public override string AgrupadorFechado { get => "]"; }
     }
 }

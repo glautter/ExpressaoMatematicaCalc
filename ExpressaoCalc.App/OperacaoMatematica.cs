@@ -10,8 +10,6 @@ namespace ExpressaoCalc.App
         private Operador Subtracao;
         private Operador Multiplicacao;
         private Operador Divisao;
-        public readonly string SinalAberto;
-        public readonly string SinalFechado;
         private readonly List<object> ItensExpressaoNumerica = new List<object>();
 
         private Numero Numero { get; set; } = new Numero();

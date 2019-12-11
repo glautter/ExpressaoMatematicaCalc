@@ -55,7 +55,7 @@
     <Compile Include="Parentese.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sinal.cs" />
+    <Compile Include="Agrupador.cs" />
     <Compile Include="Soma.cs" />
     <Compile Include="Subtracao.cs" />
   </ItemGroup>
