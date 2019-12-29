@@ -33,12 +33,9 @@ namespace ExpressaoCalc.App
 
         public string Resolver()
         {
-            var expressaoComEspaco = string.Empty;
-
             var resultadoParenteses = Parentese.Resolver();
             ExpressaoPartes.AppendLine($"-> {Expressao.ToString()}");
-            expressaoComEspaco = FormatarComEspacos(resultadoParenteses);
-
+            string expressaoComEspaco = FormatarComEspacos(resultadoParenteses);
             ExpressaoPartes.AppendLine($"-> {expressaoComEspaco}");
             Colchete.AdicionarExpressao(resultadoParenteses);
 
@@ -87,6 +84,7 @@ namespace ExpressaoCalc.App
                 if (EhNumero(expressaoSemEspaco[index]) && EhAgrupamentoFechado(expressaoSemEspaco[index])) continue;
                 if (EhNumero(expressaoSemEspaco[index]) && tamanhoCaracteres > index + 1 && (EhNumero(expressaoSemEspaco[index + 1])
                     || EhAgrupamentoFechado(expressaoSemEspaco[index + 1]))) continue;
+                if (EhNumero(expressaoSemEspaco[index]) && tamanhoCaracteres == index + 1) continue;
 
                 expressaoComEspaco += Espaco;
             }

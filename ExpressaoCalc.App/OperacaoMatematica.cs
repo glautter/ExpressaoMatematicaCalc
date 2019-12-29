@@ -50,10 +50,27 @@ namespace ExpressaoCalc.App
 
         private void ConverterItensDaExpressaoNumerica()
         {
+            int index = 0;
+            bool operadorMultiplo = false;
+            string caracterParametro = string.Empty;
+
             foreach (var caracter in SepararNumerosDeOperadores)
             {
-                AdicionarItemNaExpressaoNumerica(Numero, caracter.ToString());
-                InicializarNumero();
+                if (index > 0 && EhOperador(SepararNumerosDeOperadores[index].ToString())
+                    && EhOperador(SepararNumerosDeOperadores[index - 1].ToString()))
+                    operadorMultiplo = true;
+
+                caracterParametro += caracter.ToString();
+
+                if (!operadorMultiplo)
+                {
+                    AdicionarItemNaExpressaoNumerica(Numero, caracterParametro);
+                    InicializarNumero();
+                    caracterParametro = string.Empty;
+                }
+                operadorMultiplo = false;
+
+                index++;
             }
         }
 
