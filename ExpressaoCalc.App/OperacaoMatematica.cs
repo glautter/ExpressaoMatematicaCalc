@@ -23,7 +23,7 @@ namespace ExpressaoCalc.App
             return RealizarOperacao(ItensExpressaoNumerica);
         }
 
-        private bool PrimeiroCaraterEhSinal
+        private bool PrimeiroCaraterEhOperador
         {
             get
             {
@@ -33,7 +33,7 @@ namespace ExpressaoCalc.App
             }
         }
 
-        private bool EhSinal(string caracter)
+        private bool EhOperador(string caracter)
         {
             return caracter == Operador.Soma || caracter == Operador.Subtracao
                 || caracter == Operador.Divisao || caracter == Operador.Multiplicacao;
@@ -42,7 +42,7 @@ namespace ExpressaoCalc.App
 
         private void ConverterItensDaExpressaoNumericaNosTiposCorrespondentes()
         {
-            if (PrimeiroCaraterEhSinal)
+            if (PrimeiroCaraterEhOperador)
                 PrepararItensExpressaoNumericaComplexa();
             else
                 ConverterItensDaExpressaoNumerica();
@@ -65,13 +65,10 @@ namespace ExpressaoCalc.App
             {
                 if (IndiceZeroOuUm(index))
                 {
-                    //if (EhSinal(SepararNumerosDeOperadores[index].ToString()))
                     numeroComSinal += SepararNumerosDeOperadores[index].ToString() == Operador.Subtracao ? Operador.Subtracao :
                     SepararNumerosDeOperadores[index].ToString() == Operador.Soma ? string.Empty : SepararNumerosDeOperadores[index].ToString();
 
-                    //numeroComSinal += SepararNumerosDeOperadores[index].ToString();
-
-                    if (!EhSinal(SepararNumerosDeOperadores[index].ToString()))
+                    if (!EhOperador(SepararNumerosDeOperadores[index].ToString()))
                         AdicionarItemNaExpressaoNumerica(Numero, numeroComSinal);
                 }
                 else

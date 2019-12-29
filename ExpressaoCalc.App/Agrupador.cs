@@ -68,21 +68,6 @@ namespace ExpressaoCalc.App
             Expressao.Append(expressao);
         }
 
-        private IList<int> ObterPosicoesDoAgrupador(string agrupador)
-        {
-            var posicoes = new List<int>();
-
-            for (int index = 0; index < Expressao.Length; index++)
-            {
-                if (Expressao[index].ToString().Equals(agrupador))
-                {
-                    posicoes.Add(index);
-                }
-            }
-
-            return posicoes;
-        }
-
         public bool TemAgrupador
         {
             get { return Expressao.ToString().IndexOf(AgrupadorAberto) > -1; }

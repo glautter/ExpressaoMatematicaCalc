@@ -15,8 +15,8 @@ namespace ExpressaoCalc.App
             string expressao = "3 * [(2 + 5 - 3) * (40 + 5)]";
 
             var expressaoMatematica = new ExpressaoNumerica(expressao);
-            Console.WriteLine($"-> {expressao}");
-            Console.WriteLine(expressaoMatematica.Resolver());
+            expressaoMatematica.Resolver();
+            Console.WriteLine(expressaoMatematica.ImprimirExpressao.ToString());
             Console.ReadKey();
         }
     }
