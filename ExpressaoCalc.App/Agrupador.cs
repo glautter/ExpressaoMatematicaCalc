@@ -14,12 +14,47 @@ namespace ExpressaoCalc.App
         {
             while (TemAgrupador)
             {
+                ResolverOperadoresMultiplos();
+
                 var expressaoMinimaEncontrada = ObterExpressaoComAgrupadorQueDeveSerResolvidaPrimeiro;
                 var operacaoMatematica = new OperacaoMatematica(expressaoMinimaEncontrada.Value);
-                Expressao.Replace(expressaoMinimaEncontrada.Value, operacaoMatematica.Calcular().ToString());
+
+                var valorCalculado = operacaoMatematica.Calcular();
+                Expressao.Replace(expressaoMinimaEncontrada.Value, valorCalculado.ToString());
             }
 
             return Expressao.ToString();
+        }
+
+        private void ResolverOperadoresMultiplos()
+        {
+            var operador = string.Empty;
+
+            for (int index = 0; index < ObterOperadoresMultiplos.Count; index++)
+            {
+                var operadores = ObterOperadoresMultiplos[index];
+                if (operadores.ToString().Length == 1) continue;
+
+                foreach (var itemOperador in operadores.ToString())
+                {
+                    operador = string.IsNullOrWhiteSpace(operador) ? itemOperador.ToString() :
+                        (operador == Operador.Multiplicacao ? Operador.Multiplicacao :
+                        (operador == Operador.Divisao ? Operador.Divisao :
+                        (operador == Operador.Soma && itemOperador.ToString() == Operador.Soma ? Operador.Soma :
+                        (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Subtracao ? Operador.Soma : Operador.Subtracao))));
+                }
+                var operadorMultiplo = operadores.ToString();
+                Expressao.Replace(operadorMultiplo, operador);
+                operador = string.Empty;
+            }
+        }
+
+        private MatchCollection ObterOperadoresMultiplos
+        {
+            get
+            {
+                return Regex.Matches(Expressao.ToString(), "(([\\-\\+\\*\\/\\s])+)");
+            }
         }
 
         private Match ObterExpressaoComAgrupadorQueDeveSerResolvidaPrimeiro
@@ -29,6 +64,7 @@ namespace ExpressaoCalc.App
 
         public void AdicionarExpressao(string expressao)
         {
+            expressao = expressao.ToString().Replace(" ", "");
             Expressao.Append(expressao);
         }
 

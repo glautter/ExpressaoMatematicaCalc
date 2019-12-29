@@ -6,10 +6,7 @@ namespace ExpressaoCalc.App
     public class OperacaoMatematica
     {
         private readonly string Operacao;
-        private Operador Soma;
-        private Operador Subtracao;
-        private Operador Multiplicacao;
-        private Operador Divisao;
+        private Operador Operador;
         private readonly List<object> ItensExpressaoNumerica = new List<object>();
 
         private Numero Numero { get; set; } = new Numero();
@@ -21,12 +18,37 @@ namespace ExpressaoCalc.App
 
         public int Calcular()
         {
-            CarregarItensDaExpressaoNumerica();
+            ConverterItensDaExpressaoNumericaNosTiposCorrespondentes();
 
             return RealizarOperacao(ItensExpressaoNumerica);
         }
 
-        private void CarregarItensDaExpressaoNumerica()
+        private bool PrimeiroCaraterEhSinal
+        {
+            get
+            {
+                var primeiroCaracter = SepararNumerosDeOperadores[0].ToString();
+                return primeiroCaracter == Operador.Soma || primeiroCaracter == Operador.Subtracao
+                    || primeiroCaracter == Operador.Divisao || primeiroCaracter == Operador.Multiplicacao;
+            }
+        }
+
+        private bool EhSinal(string caracter)
+        {
+            return caracter == Operador.Soma || caracter == Operador.Subtracao
+                || caracter == Operador.Divisao || caracter == Operador.Multiplicacao;
+
+        }
+
+        private void ConverterItensDaExpressaoNumericaNosTiposCorrespondentes()
+        {
+            if (PrimeiroCaraterEhSinal)
+                PrepararItensExpressaoNumericaComplexa();
+            else
+                ConverterItensDaExpressaoNumerica();
+        }
+
+        private void ConverterItensDaExpressaoNumerica()
         {
             foreach (var caracter in SepararNumerosDeOperadores)
             {
@@ -35,16 +57,46 @@ namespace ExpressaoCalc.App
             }
         }
 
+        private void PrepararItensExpressaoNumericaComplexa()
+        {
+            var numeroComSinal = string.Empty;
+
+            for (int index = 0; index < SepararNumerosDeOperadores.Count; index++)
+            {
+                if (IndiceZeroOuUm(index))
+                {
+                    //if (EhSinal(SepararNumerosDeOperadores[index].ToString()))
+                    numeroComSinal += SepararNumerosDeOperadores[index].ToString() == Operador.Subtracao ? Operador.Subtracao :
+                    SepararNumerosDeOperadores[index].ToString() == Operador.Soma ? string.Empty : SepararNumerosDeOperadores[index].ToString();
+
+                    //numeroComSinal += SepararNumerosDeOperadores[index].ToString();
+
+                    if (!EhSinal(SepararNumerosDeOperadores[index].ToString()))
+                        AdicionarItemNaExpressaoNumerica(Numero, numeroComSinal);
+                }
+                else
+                {
+                    AdicionarItemNaExpressaoNumerica(Numero, SepararNumerosDeOperadores[index].ToString());
+                    InicializarNumero();
+                }
+            }
+        }
+
+        private static bool IndiceZeroOuUm(int index)
+        {
+            return index >= 0 && index <= 1;
+        }
+
         private MatchCollection SepararNumerosDeOperadores
         {
             get { return Regex.Matches(Operacao, "(\\d*[0-9]|\\w*[\\+\\-\\/\\*])"); }
         }
-        
+
         private void InicializarNumero()
         {
             Numero = new Numero();
         }
-        
+
         private void AdicionarItemNaExpressaoNumerica(Numero numero, string caracter)
         {
             if (Numero.EhNumerico(caracter))
@@ -58,14 +110,14 @@ namespace ExpressaoCalc.App
 
         private int RealizarOperacao(List<object> itensExpressaoMatematica)
         {
-            Multiplicacao = new Multiplicacao(itensExpressaoMatematica);
-            Multiplicacao.Resolver();
-            Divisao = new Divisao(itensExpressaoMatematica);
-            Divisao.Resolver();
-            Subtracao = new Subtracao(itensExpressaoMatematica);
-            Subtracao.Resolver();
-            Soma = new Soma(itensExpressaoMatematica);
-            Soma.Resolver();
+            Operador = new Multiplicacao(itensExpressaoMatematica);
+            Operador.Resolver();
+            Operador = new Divisao(itensExpressaoMatematica);
+            Operador.Resolver();
+            Operador = new Subtracao(itensExpressaoMatematica);
+            Operador.Resolver();
+            Operador = new Soma(itensExpressaoMatematica);
+            Operador.Resolver();
 
             return ((Numero)itensExpressaoMatematica[0]).Valor;
         }

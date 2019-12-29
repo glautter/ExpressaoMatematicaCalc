@@ -4,10 +4,10 @@ namespace ExpressaoCalc.App
 {
     public abstract class Operador
     {
-        public string Soma => "+";
-        public string Subtracao => "-";
-        public string Multiplicacao => "*";
-        public string Divisao => "/";
+        public static string Soma => "+";
+        public static string Subtracao => "-";
+        public static string Multiplicacao => "*";
+        public static string Divisao => "/";
         public int PosicaoOperador { get; set; } = -1;
         public int Resultado { get; set; } = 0;
         public Numero Numero { get; set; } = new Numero();

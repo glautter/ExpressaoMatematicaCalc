@@ -40,7 +40,5 @@ namespace ExpressaoCalc.App
 
             return $"-> {resultado.ToString()}";
         }
-
-        
     }
 }
