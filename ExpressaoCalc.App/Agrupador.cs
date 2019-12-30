@@ -38,10 +38,10 @@ namespace ExpressaoCalc.App
                 foreach (var itemOperador in operadores.ToString())
                 {
                     operador = string.IsNullOrWhiteSpace(operador) ? itemOperador.ToString() :
-                        (operador == Operador.Multiplicacao ? Operador.Multiplicacao :
-                        (operador == Operador.Divisao ? Operador.Divisao :
                         (operador == Operador.Soma && itemOperador.ToString() == Operador.Soma ? Operador.Soma :
-                        (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Subtracao ? Operador.Soma : Operador.Subtracao))));
+                        (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Subtracao ? Operador.Soma :
+                        (operador == Operador.Soma && itemOperador.ToString() == Operador.Subtracao ? Operador.Subtracao :
+                        (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Soma ? Operador.Subtracao : operador + itemOperador.ToString()))));
                 }
                 var operadorMultiplo = operadores.ToString();
                 Expressao.Replace(operadorMultiplo, operador);

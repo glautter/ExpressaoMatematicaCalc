@@ -14,6 +14,7 @@ namespace ExpressaoCalc.Test
         private readonly string ExpressaoSoComMultiplosOperadoresNegativos = "--2 * {1 --+ [3 * (4 * (45 ++-- 90)) + ((-----8) -- 5)] * 5}";
         private readonly string ExpressaoSoComParentesesSemEspaco = "3*(2+5)";
         private readonly string ExpressaoSoComMultiplicacaoDeValorNegativo = "3 * (2 - 5)";
+        private readonly string ExpressaoSoComDivisaoDeValorNegativo = "450 / (10 - 15) * (-9)";
         private ExpressaoNumerica ExpressaoMatematica { get; set; }
         
 
@@ -85,6 +86,15 @@ namespace ExpressaoCalc.Test
             var resultado = ExpressaoMatematica.Resolver();
             Assert.IsTrue(String.Compare(resultado, "-> -9") == 0);
         }
+
+        [TestMethod]
+        public void DeveResolverAExpressaoComDivisaoComValorNegativo()
+        {
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComDivisaoDeValorNegativo);
+            var resultado = ExpressaoMatematica.Resolver();
+            Assert.IsTrue(String.Compare(resultado, "-> 10") == 0);
+        }
+        
 
         [TestMethod]
         public void DeveResolverAExpressaoComParentesesValorNegativo()
