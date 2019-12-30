@@ -29,21 +29,28 @@ namespace ExpressaoCalc.App
         private void ResolverOperadoresMultiplos()
         {
             var operador = string.Empty;
+            string operadorMultiplo = string.Empty;
 
             for (int index = 0; index < ObterOperadoresMultiplos.Count; index++)
             {
-                var operadores = ObterOperadoresMultiplos[index];
+                var operadores = ObterOperadoresMultiplos[index].ToString();
                 if (operadores.ToString().Length == 1) continue;
 
-                foreach (var itemOperador in operadores.ToString())
+                foreach (var itemOperador in operadores)
                 {
+                    if (itemOperador.ToString() == Operador.Multiplicacao || itemOperador.ToString() == Operador.Divisao)
+                    {
+                        operadores = operadores.Replace(itemOperador.ToString(), "");
+                        continue;
+                    }
+
                     operador = string.IsNullOrWhiteSpace(operador) ? itemOperador.ToString() :
-                        (operador == Operador.Soma && itemOperador.ToString() == Operador.Soma ? Operador.Soma :
-                        (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Subtracao ? Operador.Soma :
-                        (operador == Operador.Soma && itemOperador.ToString() == Operador.Subtracao ? Operador.Subtracao :
-                        (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Soma ? Operador.Subtracao : operador + itemOperador.ToString()))));
+                    (operador == Operador.Soma && itemOperador.ToString() == Operador.Soma ? Operador.Soma :
+                    (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Subtracao ? Operador.Soma :
+                    (operador == Operador.Soma && itemOperador.ToString() == Operador.Subtracao ? Operador.Subtracao :
+                    (operador == Operador.Subtracao && itemOperador.ToString() == Operador.Soma ? Operador.Subtracao : operador + itemOperador.ToString()))));
                 }
-                var operadorMultiplo = operadores.ToString();
+                operadorMultiplo = operadores.ToString();
                 Expressao.Replace(operadorMultiplo, operador);
                 operador = string.Empty;
             }

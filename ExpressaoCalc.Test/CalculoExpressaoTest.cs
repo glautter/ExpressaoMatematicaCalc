@@ -7,13 +7,14 @@ namespace ExpressaoCalc.Test
     [TestClass]
     public class CalculoExpressaoTest
     {
-        private readonly string ExpressaoSoComParenteses = "3 * (2 + 5)";
-        private readonly string ExpressaoSoComDoisParenteses = "3 * ((2 + 5) + 5)";
-        private readonly string ExpressaoSoComTresParentesesUmColcheteUmaChave = "8116 / {1 + [3 * (4 * (45 + 90)) + (8 - 5)] * 5}";
-        private readonly string ExpressaoSoComParentesesValorNegativo = "-2 * {1 + [3 * (4 * (45 + 90)) + ((-8) - 5)] * 5}";
-        private readonly string ExpressaoSoComMultiplosOperadoresNegativos = "--2 * {1 --+ [3 * (4 * (45 ++-- 90)) + ((-----8) -- 5)] * 5}";
-        private readonly string ExpressaoSoComParentesesSemEspaco = "3*(2+5)";
-        private readonly string ExpressaoSoComMultiplicacaoDeValorNegativo = "3 * (2 - 5)";
+        private readonly string ExpressaoComParenteses = "3 * (2 + 5)";
+        private readonly string ExpressaoComDoisParenteses = "3 * ((2 + 5) + 5)";
+        private readonly string ExpressaoComTresParentesesUmColcheteUmaChave = "8116 / {1 + [3 * (4 * (45 + 90)) + (8 - 5)] * 5}";
+        private readonly string ExpressaoComParentesesValorNegativo = "-2 * {1 + [3 * (4 * (45 + 90)) + ((-8) - 5)] * 5}";
+        private readonly string ExpressaoComMultiplosOperadoresNegativos = "--2 * {1 --+ [3 * (4 * (45 ++-- 90)) + ((-----8) -- 5)] * 5}";
+        private readonly string ExpressaoComParentesesSemEspaco = "3*(2+5)";
+        private readonly string ExpressaoComMultiplicacaoDeValorNegativo = "3 * (2 - 5)";
+        private readonly string ExpressaoComplexa = "+++++--2 * {1 -++-+-+-+ [3 * (4 * (45 ++-- 90)) + ((-----+-+-+-+-+-+-+-8) -- 5)] * ---+++5}";
         private readonly string ExpressaoSoComDivisaoDeValorNegativo = "450 / (10 - 15) * (-9)";
         private ExpressaoNumerica ExpressaoMatematica { get; set; }
         
@@ -21,52 +22,52 @@ namespace ExpressaoCalc.Test
         [TestMethod]
         public void DeveObterParenteseAberto()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
-            ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoSoComParenteses);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParenteses);
+            ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoComParenteses);
             Assert.IsTrue(ExpressaoMatematica.Parentese.AgrupadorAberto == "(");
         }
 
         [TestMethod]
         public void DeveObterParenteseFechado()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
-            ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoSoComParenteses);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParenteses);
+            ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoComParenteses);
             Assert.IsTrue(ExpressaoMatematica.Parentese.AgrupadorFechado == ")");
         }
 
         [TestMethod]
         public void DeveIdentificarSeTemAgrupador()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
-            ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoSoComParenteses);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParenteses);
+            ExpressaoMatematica.Parentese.AdicionarExpressao(ExpressaoComParenteses);
             Assert.IsTrue(ExpressaoMatematica.Parentese.TemAgrupador);
         }
 
         [TestMethod]
         public void DeveRetirarOsEspacos()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
-            Assert.IsTrue(ExpressaoMatematica.RetirarEspacos(ExpressaoSoComParenteses) == ExpressaoSoComParentesesSemEspaco);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParenteses);
+            Assert.IsTrue(ExpressaoMatematica.RetirarEspacos(ExpressaoComParenteses) == ExpressaoComParentesesSemEspaco);
         }
 
         [TestMethod]
         public void DeveResolverAExpressaoEliminandoOsParenteses()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParenteses);
             Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(), "3*7") == 0);
         }
 
         [TestMethod]
         public void DeveResolverAExpressaoEliminandoOsDoisParenteses()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComDoisParenteses);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComDoisParenteses);
             Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(), "3*12") == 0);
         }
 
         [TestMethod]
         public void DeveResolverAExpressaoComResultado21()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParenteses);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParenteses);
             var resultado = ExpressaoMatematica.Resolver();
             Assert.IsTrue(String.Compare(resultado, "-> 21") == 0);
         }
@@ -74,7 +75,7 @@ namespace ExpressaoCalc.Test
         [TestMethod]
         public void DeveResolverAExpressaoSoComParentesesSemEspaco()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParentesesSemEspaco);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParentesesSemEspaco);
             var resultado = ExpressaoMatematica.Resolver();
             Assert.IsTrue(String.Compare(resultado, "-> 21") == 0);
         }
@@ -82,7 +83,7 @@ namespace ExpressaoCalc.Test
         [TestMethod]
         public void DeveResolverAExpressaoComMultiplicacaoComValorNegativo()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComMultiplicacaoDeValorNegativo);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComMultiplicacaoDeValorNegativo);
             var resultado = ExpressaoMatematica.Resolver();
             Assert.IsTrue(String.Compare(resultado, "-> -9") == 0);
         }
@@ -99,7 +100,7 @@ namespace ExpressaoCalc.Test
         [TestMethod]
         public void DeveResolverAExpressaoComParentesesValorNegativo()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComParentesesValorNegativo);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComParentesesValorNegativo);
             var resultado = ExpressaoMatematica.Resolver();
             Assert.IsTrue(String.Compare(resultado, "-> -16072") == 0);
         }
@@ -107,15 +108,23 @@ namespace ExpressaoCalc.Test
         [TestMethod]
         public void DeveResolverAExpressaoComMultiplosOperadoresNegativos()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComMultiplosOperadoresNegativos);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComMultiplosOperadoresNegativos);
             var resultado = ExpressaoMatematica.Resolver();
             Assert.IsTrue(String.Compare(resultado, "-> 16172") == 0);
         }
 
         [TestMethod]
+        public void DeveResolverAExpressaoComplexa()
+        {
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComplexa);
+            var resultado = ExpressaoMatematica.Resolver();
+            Assert.IsTrue(String.Compare(resultado, "-> -16328") == 0);
+        }
+
+        [TestMethod]
         public void DeveResolverAExpressaoEliminandoOsTresParentesesUmColcheteUmaChave()
         {
-            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoSoComTresParentesesUmColcheteUmaChave);
+            ExpressaoMatematica = new ExpressaoNumerica(ExpressaoComTresParentesesUmColcheteUmaChave);
             Assert.IsTrue(String.Compare(ExpressaoMatematica.Parentese.Resolver(), "8116/{1+[3*540+3]*5}") == 0);
             ExpressaoMatematica.Colchete.AdicionarExpressao(ExpressaoMatematica.Parentese.Expressao.ToString());
             Assert.IsTrue(String.Compare(ExpressaoMatematica.Colchete.Resolver(), "8116/{1+1623*5}") == 0);

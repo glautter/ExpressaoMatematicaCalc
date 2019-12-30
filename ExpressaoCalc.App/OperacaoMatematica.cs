@@ -86,13 +86,33 @@ namespace ExpressaoCalc.App
                     SepararNumerosDeOperadores[index].ToString() == Operador.Soma ? string.Empty : SepararNumerosDeOperadores[index].ToString();
 
                     if (!EhOperador(SepararNumerosDeOperadores[index].ToString()))
+                    {
                         AdicionarItemNaExpressaoNumerica(Numero, numeroComSinal);
+                        numeroComSinal = string.Empty;
+                    }
                 }
                 else
                 {
-                    AdicionarItemNaExpressaoNumerica(Numero, SepararNumerosDeOperadores[index].ToString());
-                    InicializarNumero();
+                    var operadorAnterior = SepararNumerosDeOperadores[index - 1].ToString();
+                    if (!string.IsNullOrWhiteSpace(numeroComSinal) || (EhOperador(operadorAnterior) && (operadorAnterior == Operador.Multiplicacao || operadorAnterior == Operador.Divisao)))
+                    {
+                        numeroComSinal += SepararNumerosDeOperadores[index].ToString();
+                        PrepararItemComNumero(numeroComSinal, !EhOperador(numeroComSinal));
+                        continue;
+                    }
+                                        
+                    PrepararItemComNumero(SepararNumerosDeOperadores[index].ToString());
+                    numeroComSinal = string.Empty;
                 }
+            }
+        }
+
+        private void PrepararItemComNumero(string numeroComSinal, bool adicionar = true)
+        {
+            if (adicionar)
+            {
+                AdicionarItemNaExpressaoNumerica(Numero, numeroComSinal);
+                InicializarNumero();
             }
         }
 
