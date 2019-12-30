@@ -1,6 +1,6 @@
-﻿using System;
-using ExpressaoCalc.App;
+﻿using ExpressaoCalc.App;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace ExpressaoCalc.Test
 {

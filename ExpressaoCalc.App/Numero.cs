@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ExpressaoCalc.App
+﻿namespace ExpressaoCalc.App
 {
     public class Numero
     {
